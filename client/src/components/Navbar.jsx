@@ -1,16 +1,32 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleNavClick = (sectionId) => {
+    if (location.pathname !== "/") {
+      navigate("/"); // go to homepage first
+      setTimeout(() => {
+        const section = document.getElementById(sectionId);
+        section?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    } else {
+      const section = document.getElementById(sectionId);
+      section?.scrollIntoView({ behavior: "smooth" });
+    }
+    setMenuOpen(false);
+  };
 
   return (
     <nav
@@ -31,18 +47,18 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-          <a href="#home" className="hover:text-blue-600 transition-all">
+          <button onClick={() => handleNavClick("home")} className="hover:text-blue-600 transition-all">
             Home
-          </a>
-          <a href="#features" className="hover:text-blue-600 transition-all">
+          </button>
+          <button onClick={() => handleNavClick("features")} className="hover:text-blue-600 transition-all">
             Features
-          </a>
-          <a href="#how" className="hover:text-blue-600 transition-all">
+          </button>
+          <button onClick={() => handleNavClick("how")} className="hover:text-blue-600 transition-all">
             How It Works
-          </a>
-          <a href="#testimonials" className="hover:text-blue-600 transition-all">
+          </button>
+          <button onClick={() => handleNavClick("testimonials")} className="hover:text-blue-600 transition-all">
             Testimonials
-          </a>
+          </button>
 
           {/* Right CTA Buttons */}
           <div className="flex items-center gap-4 ml-6">
@@ -74,10 +90,10 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-white/90 backdrop-blur-md border-t border-gray-200/50 shadow-sm">
           <div className="flex flex-col items-center gap-4 py-6 text-gray-700 font-medium">
-            <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
-            <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
-            <a href="#how" onClick={() => setMenuOpen(false)}>How It Works</a>
-            <a href="#testimonials" onClick={() => setMenuOpen(false)}>Testimonials</a>
+            <button onClick={() => handleNavClick("home")}>Home</button>
+            <button onClick={() => handleNavClick("features")}>Features</button>
+            <button onClick={() => handleNavClick("how")}>How It Works</button>
+            <button onClick={() => handleNavClick("testimonials")}>Testimonials</button>
             <Link
               to="/signup"
               onClick={() => setMenuOpen(false)}

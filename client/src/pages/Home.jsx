@@ -62,7 +62,7 @@ const Home = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/chat"
+                to="/journal"
                 className="px-8 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-2xl transition-transform hover:scale-105"
               >
                 Start Your Journey
