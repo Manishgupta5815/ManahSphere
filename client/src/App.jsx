@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Journal from "./pages/Journal";
 import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -9,8 +11,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<div className="p-10 text-center text-xl">Login Page (Sneha)</div>} />
-        <Route path="/signup" element={<div className="p-10 text-center text-xl">Signup Page (Sneha)</div>} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<h1>hey</h1>} /> */}
+
+        <Route path="/signup" element={<Signup/>} />
         <Route path="/journal" element={<Journal/>} />
       </Routes>
     </Router>
