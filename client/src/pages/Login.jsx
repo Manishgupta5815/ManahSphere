@@ -50,7 +50,7 @@ const Login = () => {
           Welcome Back 👋
         </h2>
         <p className="text-gray-500 text-center mb-8">
-          Log in to continue your MindEase journey
+          Log in to continue your MindScape journey
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
