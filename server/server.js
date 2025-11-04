@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// ✅ Connect to MongoDB
+/* ---------------------- CONNECT TO MONGO ---------------------- */
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
@@ -20,23 +20,36 @@ mongoose
 /* ---------------------- SIGNUP ENDPOINT ---------------------- */
 app.post("/signup", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, username, email, password } = req.body;
 
-    // Check for existing user
-    const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ message: "Email already registered" });
+    // Check for existing email or username
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }],
+    });
+    if (existingUser) {
+      if (existingUser.email === email)
+        return res.status(400).json({ message: "Email already registered" });
+      if (existingUser.username === username)
+        return res.status(400).json({ message: "Username already taken" });
+    }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
-    const newUser = new User({ name, email, password: hashedPassword });
+    // Create new user (now includes username)
+    const newUser = new User({
+      name,
+      username,
+      email,
+      password: hashedPassword,
+    });
+
     await newUser.save();
 
-    res
-      .status(201)
-      .json({ message: "Signup successful", user: { name, email } });
+    res.status(201).json({
+      message: "Signup successful",
+      user: { name, username, email },
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -49,14 +62,16 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      $or: [{ email: email }, { username: email }],
+    });
     if (!user)
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email/username or password" });
 
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email/username or password" });
 
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -66,7 +81,7 @@ app.post("/login", async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       token,
-      user: { name: user.name, email: user.email },
+      user: { name: user.name, username: user.username, email: user.email },
     });
   } catch (err) {
     console.error(err);
@@ -74,7 +89,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-/* ---------------------- SERVER START ---------------------- */
+/* ---------------------- START SERVER ---------------------- */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-//hehehe
