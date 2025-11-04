@@ -54,7 +54,7 @@ const Home = () => {
               <br /> AI-Powered Clarity
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed mb-8">
-              MindEase helps you understand your emotions, track your mood, and feel
+              MindScape helps you understand your emotions, track your mood, and feel
               supported — combining empathy with AI to make mental wellness simple,
               private, and empowering.
             </p>
@@ -82,7 +82,7 @@ const Home = () => {
           <div className="flex-1 flex justify-center md:justify-end">
             <img
               src={heroImg}
-              alt="MindEase AI Illustration"
+              alt="MindScape AI Illustration"
               className="w-[420px] md:w-[480px] drop-shadow-2xl"
             />
           </div>
@@ -95,7 +95,7 @@ const Home = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Why{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              MindEase?
+              MindScape?
             </span>
           </h2>
         </ScrollFadeIn>
@@ -110,7 +110,7 @@ const Home = () => {
             {
               icon: <Lock className="w-12 h-12 text-purple-600 mx-auto mb-4" />,
               title: "Private & Secure",
-              desc: "Your thoughts stay yours — fully encrypted and protected within MindEase.",
+              desc: "Your thoughts stay yours — fully encrypted and protected within MindScape.",
             },
             {
               icon: <MessageSquareHeart className="w-12 h-12 text-pink-600 mx-auto mb-4" />,
@@ -200,7 +200,7 @@ const Home = () => {
           {[
             {
               name: "Riya Sharma",
-              text: "MindEase helped me identify stress patterns and take control of my emotions. It's like having a therapist in my pocket.",
+              text: "MindScape helped me identify stress patterns and take control of my emotions. It's like having a therapist in my pocket.",
               stars: 5,
             },
             {
@@ -245,7 +245,7 @@ const Home = () => {
         <ScrollFadeIn>
           <div className="max-w-2xl mx-auto px-6">
             <h2 className="text-4xl font-bold mb-6">
-              Start Your MindEase Journey Today
+              Start Your MindScape Journey Today
             </h2>
             <p className="text-lg mb-8 text-blue-100">
               Take the first step towards emotional clarity and balanced living.
@@ -267,10 +267,10 @@ const Home = () => {
         className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-10 text-center"
       >
         <h4 className="font-semibold text-lg mb-2">
-          MindEase — Where Tech Meets Empathy 💙
+          MindScape — Where Tech Meets Empathy 💙
         </h4>
         <p className="text-sm opacity-90 mb-1">
-          ⚠ MindEase provides emotional insights, not medical diagnosis.
+          ⚠ MindScape provides emotional insights, not medical diagnosis.
         </p>
         <p className="text-sm opacity-90">
           In distress? Contact AASRA Helpline (India): 91-9820466726 | Global:
