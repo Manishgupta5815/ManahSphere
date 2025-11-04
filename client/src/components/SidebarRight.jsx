@@ -17,8 +17,8 @@ const SidebarRight = () => {
 
   return (
     <div
-      className="bg-white border-l border-gray-200 h-screen shadow-sm flex flex-col justify-between
-      rounded-tl-2xl rounded-bl-2xl p-8 w-full transition-all duration-300"
+      className="fixed top-0 right-0 w-[24rem] h-screen bg-white border-l border-gray-200 shadow-md
+      flex flex-col justify-between rounded-tl-2xl rounded-bl-2xl p-8 transition-all duration-300 z-40"
     >
       {/* Top Section */}
       <div>

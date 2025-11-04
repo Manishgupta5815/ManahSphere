@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Video, Pen, Send } from "lucide-react";
+import { Image, Video, Send } from "lucide-react";
 
 const emotions = [
   { label: "Joy", emoji: "😄" },
@@ -35,11 +35,12 @@ const PostInput = ({ onPost }) => {
 
   return (
     <div
-      className="bg-white border border-gray-200 rounded-2xl shadow-[0_4px_18px_rgba(0,0,0,0.06)] 
-      p-8 mb-8 transition-all duration-300 hover:shadow-[0_6px_24px_rgba(0,0,0,0.09)]"
+      className="bg-white border border-gray-200 rounded-2xl shadow-[0_4px_22px_rgba(0,0,0,0.06)] 
+      p-8 mb-8 transition-all duration-300 hover:shadow-[0_6px_28px_rgba(0,0,0,0.08)] 
+      w-full mx-auto max-w-4xl"
     >
       {/* Header Section */}
-      <div className="flex items-start gap-5 mb-6">
+      <div className="flex items-start gap-6 mb-6">
         <img
           src="/profile.jpg"
           alt="User"
@@ -48,39 +49,36 @@ const PostInput = ({ onPost }) => {
 
         <div className="flex-1">
           <textarea
-            placeholder="Share your thoughts, updates, or ideas with your network..."
+            placeholder="Share your thoughts, reflections, or experiences..."
             value={text}
             onChange={(e) => setText(e.target.value)}
-            rows={text ? 4 : 2}
+            rows={text ? 5 : 3}
             className="w-full bg-gray-50 border border-gray-200 focus:border-[#0A4D68] focus:ring-2 
-            focus:ring-[#0A4D68]/30 rounded-xl px-5 py-4 text-[18px] leading-relaxed text-slate-800 resize-none 
-            outline-none placeholder-gray-500 transition-all duration-300"
+            focus:ring-[#0A4D68]/30 rounded-xl px-6 py-5 text-[18px] leading-relaxed text-slate-800 resize-none 
+            outline-none placeholder-gray-500 transition-all duration-300 min-h-[160px]"
           />
         </div>
       </div>
 
-      <hr className="border-gray-200 mb-6" />
+      <hr className="border-gray-200 mb-5" />
 
       {/* Footer Controls */}
       <div className="flex justify-between items-center">
-        {/* Left Tool Buttons */}
-        <div className="flex gap-8 text-gray-600 text-[17px]">
+        {/* Left Buttons */}
+        <div className="flex gap-10 text-gray-600 text-[16px]">
           <button className="flex items-center gap-2 hover:text-[#0A4D68] transition-all duration-150 hover:scale-[1.03]">
-            <Image size={22} strokeWidth={1.8} /> <span>Photo</span>
+            <Image size={24} strokeWidth={1.8} /> <span>Photo</span>
           </button>
           <button className="flex items-center gap-2 hover:text-[#0A4D68] transition-all duration-150 hover:scale-[1.03]">
-            <Video size={22} strokeWidth={1.8} /> <span>Video</span>
-          </button>
-          <button className="flex items-center gap-2 hover:text-[#0A4D68] transition-all duration-150 hover:scale-[1.03]">
-            <Pen size={22} strokeWidth={1.8} /> <span>Article</span>
+            <Video size={24} strokeWidth={1.8} /> <span>Video</span>
           </button>
         </div>
 
-        {/* Right Post Button */}
+        {/* Post Button */}
         <button
           onClick={handlePost}
           disabled={!text.trim() || loading}
-          className={`flex items-center gap-2 px-8 py-3 text-[17px] font-semibold rounded-full transition-all duration-200
+          className={`flex items-center gap-2 px-9 py-3 text-[17px] font-semibold rounded-full transition-all duration-200
             ${
               !text.trim() || loading
                 ? "bg-gray-200 text-gray-500 cursor-not-allowed"
@@ -100,7 +98,7 @@ const PostInput = ({ onPost }) => {
         </button>
       </div>
 
-      {/* Subtle System Message */}
+      {/* Subtle AI Message */}
       {loading && (
         <div className="mt-4 text-right text-[#0A4D68] text-[15px] italic animate-pulse">
           MindScape AI is analyzing your post sentiment...

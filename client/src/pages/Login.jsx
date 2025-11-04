@@ -11,7 +11,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
@@ -29,7 +28,7 @@ const Login = () => {
         alert("Login successful!");
         console.log("User logged in:", data);
 
-        // ✅ Optionally, store token or redirect
+        // ✅ Optionally store token or redirect
         // localStorage.setItem("token", data.token);
         // window.location.href = "/dashboard";
       } else {
@@ -47,22 +46,22 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
       <div className="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md border border-gray-100">
         <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-          Welcome Back 👋
+          Welcome Back 
         </h2>
         <p className="text-gray-500 text-center mb-8">
           Log in to continue your MindScape journey
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email */}
+          {/* Email or Username */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
-              Email Address
+              Email/Username
             </label>
             <input
-              type="email"
+              type="text"
               name="email"
-              placeholder="you@example.com"
+              placeholder="Enter your email/username"
               value={formData.email}
               onChange={handleChange}
               required

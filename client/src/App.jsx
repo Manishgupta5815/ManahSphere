@@ -2,27 +2,24 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Home from "./pages/Home";
 import Journal from "./pages/Journal";
 import Navbar from "./components/Navbar";
-import LoggedInNavbar from "./components/LoggedInNavbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import FeedPage from "./pages/FeedPage";
-import Profile from "./pages/Profile"; 
+import Profile from "./pages/Profile";
 
-// ✅ Helper component to conditionally render navbars
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  // Define which paths should show the LoggedInNavbar
-  const loggedInPaths = ["/feed", "/profile", "/journal"];
+  // 👇 Define which pages should hide the Navbar
+  const hideNavbarPaths = ["/feed", "/profile", "/journal"];
 
-  // Check if current route matches a logged-in path
-  const showLoggedInNavbar = loggedInPaths.some((path) =>
+  const hideNavbar = hideNavbarPaths.some((path) =>
     location.pathname.startsWith(path)
   );
 
   return (
     <>
-      {showLoggedInNavbar ? <LoggedInNavbar /> : <Navbar />}
+      {!hideNavbar && <Navbar />}
       {children}
     </>
   );
@@ -36,8 +33,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
-          {/* Authenticated Routes */}
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/profile" element={<Profile />} />

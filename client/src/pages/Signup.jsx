@@ -3,159 +3,178 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
+  const [passwordStrength, setPasswordStrength] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Password strength indicator
+    if (name === "password") {
+      if (value.length === 0) setPasswordStrength("");
+      else if (value.length < 8) setPasswordStrength("weak");
+      else setPasswordStrength("strong");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    setLoading(true);
 
     try {
-      setLoading(true);
-
-      // ✅ API call to backend
       const response = await fetch("http://localhost:5000/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-
       if (response.ok) {
         alert("Signup successful!");
-        navigate("/login"); // redirect to login page after signup
+        navigate("/login");
       } else {
-        alert(data.message || "Signup failed!");
+        alert(data.message || "Signup failed.");
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
+      console.error("Signup error:", error);
+      alert("Error occurred during signup.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md border border-gray-100">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-          Create Your Account ✨
-        </h2>
-        <p className="text-gray-500 text-center mb-8">
-          Join MindScape and start your journey towards peace and clarity
-        </p>
+    <div className="signup-container" style={styles.container}>
+      <h2 style={styles.heading}>Create Account</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
 
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
 
-          {/* Password */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
 
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="••••••••"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
 
-          {/* Signup Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-xl shadow-md hover:opacity-90 transition duration-200"
+        {passwordStrength && (
+          <p
+            style={{
+              color: passwordStrength === "weak" ? "red" : "green",
+              marginTop: "-8px",
+              marginBottom: "10px",
+              fontSize: "0.9rem",
+            }}
           >
-            {loading ? "Signing Up..." : "Sign Up"}
-          </button>
+            {passwordStrength === "weak"
+              ? "Weak password"
+              : "Strong password"}
+          </p>
+        )}
 
-          {/* Extra Options */}
-          <div className="text-center mt-4">
-            <p className="text-gray-500 text-sm">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-purple-600 font-semibold hover:underline"
-              >
-                Log in
-              </Link>
-            </p>
-          </div>
-        </form>
-      </div>
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+
+        <button type="submit" disabled={loading} style={styles.button}>
+          {loading ? "Signing up..." : "Sign Up"}
+        </button>
+      </form>
+
+      <p style={{ marginTop: "10px" }}>
+        Already have an account?{" "}
+        <Link to="/login" style={{ color: "#007bff" }}>
+          Login
+        </Link>
+      </p>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "60px auto",
+    padding: "30px",
+    background: "#fff",
+    borderRadius: "10px",
+    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+    textAlign: "center",
+  },
+  heading: {
+    marginBottom: "20px",
+    fontSize: "1.8rem",
+    fontWeight: "bold",
+    
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  input: {
+    padding: "10px",
+    margin: "10px 0",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    fontSize: "1rem",
+  },
+  button: {
+    padding: "10px",
+    marginTop: "10px",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "1rem",
+  },
 };
 
 export default Signup;
