@@ -35,42 +35,41 @@ const PostInput = ({ onPost }) => {
 
   return (
     <div
-      className="bg-white border border-gray-200 rounded-2xl shadow-[0_4px_22px_rgba(0,0,0,0.06)] 
-      p-8 mb-8 transition-all duration-300 hover:shadow-[0_6px_28px_rgba(0,0,0,0.08)] 
-      w-full mx-auto max-w-4xl"
+      className="bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white border border-gray-200 rounded-xl shadow-sm 
+      p-5 mb-6 transition-all duration-300 hover:shadow-[0_4px_14px_rgba(59,130,246,0.1)] w-full mx-auto max-w-2xl"
     >
       {/* Header Section */}
-      <div className="flex items-start gap-6 mb-6">
+      <div className="flex items-start gap-4 mb-4">
         <img
           src="/profile.jpg"
           alt="User"
-          className="w-14 h-14 rounded-full object-cover border border-gray-300 shadow-sm"
+          className="w-10 h-10 rounded-full object-cover border border-gray-300"
         />
 
         <div className="flex-1">
           <textarea
-            placeholder="Share your thoughts, reflections, or experiences..."
+            placeholder="Share your thoughts..."
             value={text}
             onChange={(e) => setText(e.target.value)}
-            rows={text ? 5 : 3}
-            className="w-full bg-gray-50 border border-gray-200 focus:border-[#0A4D68] focus:ring-2 
-            focus:ring-[#0A4D68]/30 rounded-xl px-6 py-5 text-[18px] leading-relaxed text-slate-800 resize-none 
-            outline-none placeholder-gray-500 transition-all duration-300 min-h-[160px]"
+            rows={text ? 3 : 2}
+            className="w-full bg-white/70 border border-gray-200 focus:border-blue-500 focus:ring-2 
+            focus:ring-blue-400/30 rounded-lg px-4 py-3 text-[15px] leading-relaxed text-slate-800 resize-none 
+            outline-none placeholder-gray-500 transition-all duration-300"
           />
         </div>
       </div>
 
-      <hr className="border-gray-200 mb-5" />
+      <hr className="border-gray-200 mb-3" />
 
       {/* Footer Controls */}
       <div className="flex justify-between items-center">
         {/* Left Buttons */}
-        <div className="flex gap-10 text-gray-600 text-[16px]">
-          <button className="flex items-center gap-2 hover:text-[#0A4D68] transition-all duration-150 hover:scale-[1.03]">
-            <Image size={24} strokeWidth={1.8} /> <span>Photo</span>
+        <div className="flex gap-6 text-gray-600 text-[13.5px]">
+          <button className="flex items-center gap-1.5 hover:text-blue-600 transition-all duration-150 hover:scale-[1.02]">
+            <Image size={18} strokeWidth={1.7} /> Photo
           </button>
-          <button className="flex items-center gap-2 hover:text-[#0A4D68] transition-all duration-150 hover:scale-[1.03]">
-            <Video size={24} strokeWidth={1.8} /> <span>Video</span>
+          <button className="flex items-center gap-1.5 hover:text-purple-600 transition-all duration-150 hover:scale-[1.02]">
+            <Video size={18} strokeWidth={1.7} /> Video
           </button>
         </div>
 
@@ -78,21 +77,21 @@ const PostInput = ({ onPost }) => {
         <button
           onClick={handlePost}
           disabled={!text.trim() || loading}
-          className={`flex items-center gap-2 px-9 py-3 text-[17px] font-semibold rounded-full transition-all duration-200
+          className={`flex items-center gap-2 px-6 py-2 text-[14px] font-semibold rounded-full transition-all duration-300
             ${
               !text.trim() || loading
                 ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                : "bg-[#0A4D68] text-white hover:bg-[#0c5d82] shadow-sm hover:shadow-md hover:scale-[1.02]"
+                : "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:shadow-lg hover:scale-[1.03]"
             }`}
         >
           {loading ? (
             <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
               Posting...
             </>
           ) : (
             <>
-              <Send size={20} strokeWidth={1.8} /> Post
+              <Send size={16} strokeWidth={1.8} /> Post
             </>
           )}
         </button>
@@ -100,7 +99,7 @@ const PostInput = ({ onPost }) => {
 
       {/* Subtle AI Message */}
       {loading && (
-        <div className="mt-4 text-right text-[#0A4D68] text-[15px] italic animate-pulse">
+        <div className="mt-3 text-right bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-[13.5px] italic animate-pulse">
           MindScape AI is analyzing your post sentiment...
         </div>
       )}
