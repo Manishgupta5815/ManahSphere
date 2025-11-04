@@ -1,7 +1,41 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+// Reusable floating input component
+const FloatingInput = ({ label, type, name, value, onChange, required }) => {
+  const hasValue = value && value.length > 0;
+
+  return (
+    <div className="relative mb-5">
+      <input
+        type={type}
+        name={name}
+        id={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+        placeholder=" "
+        className="peer w-full px-3 pt-[16px] pb-[8px] border border-gray-300 rounded-lg text-gray-800 text-[15px] bg-transparent 
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+        focus:shadow-[0_2px_8px_rgba(59,130,246,0.1)] transition-all duration-200 ease-in-out"
+      />
+      <label
+        htmlFor={name}
+        className={`absolute left-3 text-gray-500 bg-white px-1 transition-all duration-200 ease-in-out
+          ${
+            hasValue
+              ? "top-[-7px] text-[12px] text-[#5b46f8]"
+              : "top-[11px] text-[15px] text-gray-500 peer-focus:top-[-7px] peer-focus:text-[12px] peer-focus:text-[#5b46f8]"
+          }`}
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
@@ -16,9 +50,7 @@ const Login = () => {
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -27,15 +59,12 @@ const Login = () => {
       if (response.ok) {
         alert("Login successful!");
         console.log("User logged in:", data);
-
-        // ✅ Optionally store token or redirect
-        // localStorage.setItem("token", data.token);
-        // window.location.href = "/dashboard";
+        navigate("/feed");
       } else {
         alert(data.message || "Invalid credentials");
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Login error:", error);
       alert("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
@@ -43,73 +72,69 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md border border-gray-100">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-          Welcome Back 
+    <div className="min-h-screen bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white flex justify-center items-start font-['Inter'] text-gray-800 px-4 pt-44 pb-24">
+      <div className="bg-white/80 backdrop-blur-md shadow-2xl border border-blue-100 rounded-3xl p-8 w-full max-w-sm transition-all duration-300 hover:shadow-[0_8px_28px_rgba(37,99,235,0.15)]">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            MindScape
+          </h1>
+          <p className="text-gray-500 mt-1 text-[14px]">
+            Welcome back to your mindful journey
+          </p>
+        </div>
+
+        {/* Title */}
+        <h2
+          className="text-2xl font-semibold text-center mb-5 text-gray-800 tracking-tight"
+          style={{ fontFamily: "IBM Plex Sans, sans-serif" }}
+        >
+          Log in to Your Account
         </h2>
-        <p className="text-gray-500 text-center mb-8">
-          Log in to continue your MindScape journey
-        </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email or Username */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Email/Username
-            </label>
-            <input
-              type="text"
-              name="email"
-              placeholder="Enter your email/username"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <FloatingInput
+            label="Email or Username"
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-          {/* Password */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+          <FloatingInput
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-          {/* Login Button */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 text-white font-semibold rounded-xl shadow-md transition duration-200 ${
+            className={`w-full py-2.5 mt-4 text-[16px] font-semibold rounded-xl text-white shadow-md transition-all duration-300 ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90"
+                : "bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-[1.02] hover:shadow-lg"
             }`}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          {/* Extra Options */}
-          <div className="text-center mt-4">
-            <p className="text-gray-500 text-sm">
-              Don’t have an account?{" "}
-              <Link
-                to="/signup"
-                className="text-purple-600 font-semibold hover:underline"
-              >
-                Sign up
-              </Link>
-            </p>
-          </div>
+          {/* Footer */}
+          <p className="text-center text-gray-600 text-sm mt-5">
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-semibold hover:underline"
+            >
+              Sign up
+            </Link>
+          </p>
         </form>
       </div>
     </div>

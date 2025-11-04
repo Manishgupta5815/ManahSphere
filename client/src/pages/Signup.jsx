@@ -1,6 +1,38 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+const FloatingInput = ({ label, type, name, value, onChange, required }) => {
+  const hasValue = value && value.length > 0;
+
+  return (
+    <div className="relative mb-5">
+      <input
+        type={type}
+        name={name}
+        id={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+        placeholder=" "
+        className="peer w-full px-3 pt-[14px] pb-[8px] border border-gray-300 rounded-lg text-gray-800 text-[15px] bg-transparent 
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+        focus:shadow-[0_2px_8px_rgba(59,130,246,0.1)] transition-all duration-200 ease-in-out"
+      />
+      <label
+        htmlFor={name}
+        className={`absolute left-3 text-gray-500 bg-white px-1 transition-all duration-200 ease-in-out
+          ${hasValue
+            ? "top-[-7px] text-[12px] text-[#5b46f8]"
+            : "top-[11px] text-[15px] text-gray-500 peer-focus:top-[-7px] peer-focus:text-[12px] peer-focus:text-[#5b46f8]"
+          }`}
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
+
+
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -19,7 +51,6 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Password strength indicator
     if (name === "password") {
       if (value.length === 0) setPasswordStrength("");
       else if (value.length < 8) setPasswordStrength("weak");
@@ -54,127 +85,110 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container" style={styles.container}>
-      <h2 style={styles.heading}>Create Account</h2>
-
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
-
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
-
-        {passwordStrength && (
-          <p
-            style={{
-              color: passwordStrength === "weak" ? "red" : "green",
-              marginTop: "-8px",
-              marginBottom: "10px",
-              fontSize: "0.9rem",
-            }}
-          >
-            {passwordStrength === "weak"
-              ? "Weak password"
-              : "Strong password"}
+    <div className="min-h-screen bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white flex justify-center items-center font-['Inter'] text-gray-800 px-4 pt-16 pb-10">
+      <div className="bg-white/80 backdrop-blur-md shadow-2xl border border-blue-100 rounded-3xl p-7 w-full max-w-sm transition-all duration-300 hover:shadow-[0_8px_28px_rgba(37,99,235,0.15)]">
+        {/* Header */}
+        <div className="text-center mb-5">
+          <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            MindScape
+          </h1>
+          <p className="text-gray-500 mt-1 text-[13px]">
+            Your AI-powered journey to mindfulness
           </p>
-        )}
+        </div>
 
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
+        {/* Title */}
+        <h2
+          className="text-xl font-semibold text-center mb-4 text-gray-800 tracking-tight"
+          style={{ fontFamily: "DM Sans, sans-serif" }}
+        >
+          Create Your Account
+        </h2>
 
-        <button type="submit" disabled={loading} style={styles.button}>
-          {loading ? "Signing up..." : "Sign Up"}
-        </button>
-      </form>
+        {/* Form */}
+        <form onSubmit={handleSubmit}>
+          <FloatingInput
+            label="Full Name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <FloatingInput
+            label="Username"
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <FloatingInput
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <FloatingInput
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-      <p style={{ marginTop: "10px" }}>
-        Already have an account?{" "}
-        <Link to="/login" style={{ color: "#007bff" }}>
-          Login
-        </Link>
-      </p>
+          {/* Password Strength Message — fixed position so layout doesn’t jump */}
+          <div className="min-h-[22px] mt-[-6px] mb-1">
+            {passwordStrength && (
+              <p
+                className={`text-xs ${passwordStrength === "weak" ? "text-red-500" : "text-green-600"
+                  } transition-all duration-200`}
+              >
+                {passwordStrength === "weak"
+                  ? "Weak password — try adding more characters."
+                  : "Strong password"}
+              </p>
+            )}
+          </div>
+
+          <FloatingInput
+            label="Confirm Password"
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-2.5 mt-4 text-[15px] font-semibold rounded-xl text-white shadow-md transition-all duration-300 ${loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-[1.02] hover:shadow-lg"
+              }`}
+          >
+            {loading ? "Creating Account..." : "Sign Up"}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-center text-gray-600 text-sm mt-4">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-semibold hover:underline"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: "400px",
-    margin: "60px auto",
-    padding: "30px",
-    background: "#fff",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    textAlign: "center",
-  },
-  heading: {
-    marginBottom: "20px",
-    fontSize: "1.8rem",
-    fontWeight: "bold",
-    
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  input: {
-    padding: "10px",
-    margin: "10px 0",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-    fontSize: "1rem",
-  },
-  button: {
-    padding: "10px",
-    marginTop: "10px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
 };
 
 export default Signup;

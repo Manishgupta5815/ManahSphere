@@ -13,22 +13,25 @@ const FeedPage = () => {
   };
 
   return (
-    <div className="bg-[#F8FAFC] text-slate-900 min-h-screen overflow-x-hidden transition-colors duration-500">
+    <div
+      className="min-h-screen font-['Inter'] text-gray-800 overflow-x-hidden transition-colors duration-500 
+      bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white"
+    >
       {/* Fixed Sidebars */}
       <SidebarLeft />
       <SidebarRight />
 
-      {/* Main Feed Section */}
+      {/* Main Feed Area */}
       <main
-        className="flex flex-col items-center pt-16 px-6"
+        className="flex flex-col items-center pt-20 px-4 sm:px-6"
         style={{
-          marginLeft: "24rem",
-          marginRight: "24rem",
+          marginLeft: "18rem", // aligned with your smaller sidebar width
+          marginRight: "18rem",
         }}
       >
-        {/* Post Input */}
+        {/* Post Input Section */}
         <motion.div
-          className="w-full max-w-4xl"
+          className="w-full flex justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -36,8 +39,8 @@ const FeedPage = () => {
           <PostInput onPost={handleNewPost} />
         </motion.div>
 
-        {/* Posts Section */}
-        <div className="w-full max-w-4xl mt-6 space-y-6">
+        {/* Feed Posts */}
+        <div className="w-full max-w-2xl mt-6 space-y-6">
           <AnimatePresence>
             {posts.length === 0 ? (
               <motion.div
@@ -46,19 +49,19 @@ const FeedPage = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-center text-gray-500 mt-10 text-[16px]"
+                className="text-center text-gray-500 mt-10 text-[15px]"
               >
-                No posts yet. Be the first to share something insightful!
+                No posts yet. Be the first to share something insightful 💭
               </motion.div>
             ) : (
               posts.map((post, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 25 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{
-                    duration: 0.5,
+                    duration: 0.4,
                     delay: idx * 0.05,
                     ease: "easeOut",
                   }}
