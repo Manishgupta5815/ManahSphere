@@ -29,8 +29,8 @@ const SidebarLeft = () => {
 
   return (
     <div
-      className="bg-white border-r border-gray-200 h-screen shadow-sm flex flex-col justify-between 
-      rounded-tr-2xl rounded-br-2xl transition-all duration-300 w-full"
+      className="fixed top-0 left-0 w-[24rem] h-screen bg-white border-r border-gray-200 shadow-md 
+      flex flex-col justify-between rounded-tr-2xl rounded-br-2xl transition-all duration-300 z-40"
     >
       {/* Top Section */}
       <div>
