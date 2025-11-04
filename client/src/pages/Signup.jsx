@@ -63,7 +63,7 @@ const Signup = () => {
           Create Your Account ✨
         </h2>
         <p className="text-gray-500 text-center mb-8">
-          Join MindEase and start your journey towards peace and clarity
+          Join MindScape and start your journey towards peace and clarity
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">

@@ -4,6 +4,7 @@ import Journal from "./pages/Journal";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import FeedPage from "./pages/FeedPage";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="/login" element={<h1>hey</h1>} /> */}
-
+        <Route path="/feed" element={<FeedPage/>} />  
         <Route path="/signup" element={<Signup/>} />
         <Route path="/journal" element={<Journal/>} />
       </Routes>

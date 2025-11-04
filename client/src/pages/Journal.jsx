@@ -57,7 +57,7 @@ export default function Journal() {
         className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl p-10 border border-gray-100"
       >
         <h1 className="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          MindEase Journal
+          MindScape Journal
         </h1>
 
         {!showReport ? (
