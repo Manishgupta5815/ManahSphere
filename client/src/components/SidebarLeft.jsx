@@ -9,15 +9,17 @@ import {
   Settings,
   HelpCircle,
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const SidebarLeft = () => {
   const navItems = [
-    { icon: <Home size={18} />, label: "Home" },
-    { icon: <Search size={18} />, label: "Search" },
-    { icon: <Compass size={18} />, label: "Explore" },
-    { icon: <MessageCircle size={18} />, label: "Messages" },
-    { icon: <Bell size={18} />, label: "Notifications" },
-    { icon: <User size={18} />, label: "Profile" },
+    { icon: <Home size={18} />, label: "Home", path: "/" },
+    { icon: <Search size={18} />, label: "Search", path: "/search" },
+    { icon: <Compass size={18} />, label: "Explore", path: "/explore" },
+    { icon: <MessageCircle size={18} />, label: "Messages", path: "/messages" },
+    { icon: <Bell size={18} />, label: "Notifications", path: "/notifications" },
+    // ✅ Added path to Profile so it links to the new page
+    { icon: <User size={18} />, label: "Profile", path: "/profile" },
   ];
 
   const bottomItems = [
@@ -44,15 +46,22 @@ const SidebarLeft = () => {
         {/* Navigation Items */}
         <div className="flex flex-col gap-2.5 mt-5 px-6">
           {navItems.map((item, i) => (
-            <div
+            <NavLink
               key={i}
-              className="flex items-center gap-3 text-[14px] text-gray-700 font-medium 
-              hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-700
-              px-3 py-2 rounded-lg cursor-pointer transition-all duration-200"
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 text-[14px] font-medium px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                  isActive
+                    ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700"
+                    : "text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-700"
+                }`
+              }
             >
-              <span className="text-gray-600 group-hover:text-blue-600">{item.icon}</span>
+              <span className="text-gray-600 group-hover:text-blue-600">
+                {item.icon}
+              </span>
               <span>{item.label}</span>
-            </div>
+            </NavLink>
           ))}
         </div>
       </div>
