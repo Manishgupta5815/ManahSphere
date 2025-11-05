@@ -25,7 +25,7 @@ const FeedPage = () => {
       <main
         className="flex flex-col items-center pt-20 px-4 sm:px-6"
         style={{
-          marginLeft: "18rem", // aligned with your smaller sidebar width
+          marginLeft: "18rem", 
           marginRight: "18rem",
         }}
       >
