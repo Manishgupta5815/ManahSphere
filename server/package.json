@@ -9,12 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "bcryptjs": "^3.0.2",
     "cookie": "^1.0.2",
-=======
-    "bcryptjs": "^3.0.3",
->>>>>>> 9e3123536a73b64de8e2c3e4ad5dd0bf20166014
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",

@@ -10,6 +10,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logo01.jpg"; // ✅ Ensure your image is in: client/src/assets/Mnsphere01.jpg
 
 const SidebarLeft = () => {
   const navItems = [
@@ -18,7 +19,6 @@ const SidebarLeft = () => {
     { icon: <Compass size={18} />, label: "Explore", path: "/explore" },
     { icon: <MessageCircle size={18} />, label: "Messages", path: "/messages" },
     { icon: <Bell size={18} />, label: "Notifications", path: "/notifications" },
-    // ✅ Added path to Profile so it links to the new page
     { icon: <User size={18} />, label: "Profile", path: "/profile" },
   ];
 
@@ -32,15 +32,23 @@ const SidebarLeft = () => {
       className="fixed top-0 left-0 w-[18rem] h-screen bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white 
       border-r border-gray-200 shadow-sm flex flex-col justify-between transition-all duration-300 z-40"
     >
-      {/* Top Section */}
+      {/* 🔷 Top Section with Rectangular Logo */}
       <div>
-        <div className="px-6 py-5 border-b border-gray-100">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
-            MindScape
-          </h1>
-          <p className="text-gray-500 text-[13px] mt-1">
-            Your AI-powered space
-          </p>
+        <div className="flex items-center justify-center px-6 py-6 border-b border-gray-100 bg-white">
+          <img
+            src={logo}
+            alt="Manasphere Logo"
+            width="287"
+            height="43"
+            className="object-contain rounded-md shadow-sm"
+            style={{
+              maxWidth: "180px", // ensures proportional scaling
+              height: "auto",
+              borderRadius: "6px",
+              backgroundColor: "white",
+              padding: "4px",
+            }}
+          />
         </div>
 
         {/* Navigation Items */}
@@ -66,7 +74,7 @@ const SidebarLeft = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
+      {/* 🔧 Bottom Section */}
       <div className="px-6 py-4 border-t border-gray-100">
         {bottomItems.map((item, i) => (
           <div
@@ -79,7 +87,7 @@ const SidebarLeft = () => {
             <span>{item.label}</span>
           </div>
         ))}
-        <p className="text-gray-400 text-[12px] mt-4">© 2025 MindScape Inc.</p>
+        <p className="text-gray-400 text-[12px] mt-4">© 2025 Manasphere Inc.</p>
       </div>
     </div>
   );
