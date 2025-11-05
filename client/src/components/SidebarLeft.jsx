@@ -11,7 +11,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import logoFull from "../assets/logo.png"; 
+import logoFull from "../assets/logo.png"; // ensure this path is correct
 
 const SidebarLeft = () => {
   const navigate = useNavigate();
@@ -38,75 +38,80 @@ const SidebarLeft = () => {
   ];
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // clear JWT if used
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
   return (
     <div
       className="fixed top-0 left-0 w-[18rem] h-screen bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white 
-      border-r border-gray-200 shadow-sm flex flex-col justify-between transition-all duration-300 z-40"
+      border-r border-gray-200 shadow-sm flex flex-col justify-start transition-all duration-300 z-40"
     >
-      {/* --- Top Section (Logo + Shadow + Tagline) --- */}
-      <div className="px-6 py-5 border-b border-gray-100 text-center">
-        <div className="flex flex-col items-center justify-center overflow-visible">
-          {/* Logo */}
-          <img
-            src={logoFull}
-            alt="मनःSphere Full Logo"
-            className="h-20 md:h-24 w-auto object-contain select-none contrast-120 brightness-20"
-            draggable="false"
-            loading="eager"
-          />
+      {/* --- Top Section (Logo + Shadow + Tagline + Nav) --- */}
+      <div>
+        <div className="px-4 pt-4 pb-2 border-b border-gray-100 text-center">
+          <div className="flex flex-col items-center justify-center overflow-visible leading-none">
+            {/* Logo */}
+            <img
+              src={logoFull}
+              alt="मनःSphere Full Logo"
+              className="h-20 w-auto object-contain select-none contrast-125 brightness-110"
+              draggable="false"
+              loading="eager"
+            />
 
-          {/* Shadow under the globe */}
-          <svg
-            className="-mt-1"
-            width="140"
-            height="14"
-            viewBox="0 0 180 16"
-            aria-hidden="true"
-          >
-            <defs>
-              <radialGradient id="globeShadow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopOpacity="0.25" stopColor="#000" />
-                <stop offset="100%" stopOpacity="0" stopColor="#000" />
-              </radialGradient>
-            </defs>
-            <ellipse cx="90" cy="8" rx="70" ry="5" fill="url(#globeShadow)" />
-          </svg>
+            {/* Shadow under the globe */}
+            <svg
+              className="-mt-2"
+              width="132"
+              height="10"
+              viewBox="0 0 180 16"
+              aria-hidden="true"
+            >
+              <defs>
+                <radialGradient id="globeShadow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopOpacity="0.22" stopColor="#000" />
+                  <stop offset="100%" stopOpacity="0" stopColor="#000" />
+                </radialGradient>
+              </defs>
+              <ellipse cx="90" cy="8" rx="60" ry="4" fill="url(#globeShadow)" />
+            </svg>
 
-          {/* Tagline */}
-          <p className="text-gray-500 text-[13px] mt-2 tracking-wide">
-            Your <span className="text-blue-600 font-medium">AI-powered</span> space
-          </p>
+            {/* Tagline */}
+            <p className="text-gray-500 text-[12px] mt-1 tracking-wide">
+              Your <span className="text-blue-600 font-medium">AI-powered</span> space
+            </p>
+          </div>
+        </div>
+
+        {/* Navigation Items */}
+        <div className="flex flex-col gap-1.5 mt-4 px-4">
+          {navItems.map((item, i) => (
+            <NavLink
+              key={i}
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 text-[14px] font-medium px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                  isActive
+                    ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700"
+                    : "text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-700"
+                }`
+              }
+            >
+              <span className="text-gray-600 group-hover:text-blue-600">
+                {item.icon}
+              </span>
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
         </div>
       </div>
 
-      {/* --- Navigation Items --- */}
-      <div className="flex flex-col gap-2.5 mt-5 px-6">
-        {navItems.map((item, i) => (
-          <NavLink
-            key={i}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 text-[14px] font-medium px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
-                isActive
-                  ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700"
-                  : "text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-700"
-              }`
-            }
-          >
-            <span className="text-gray-600 group-hover:text-blue-600">
-              {item.icon}
-            </span>
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
-      </div>
-
-      {/* --- Bottom Section (More Dropdown) --- */}
-      <div className="relative px-6 py-4 border-t border-gray-100" ref={menuRef}>
+      {/* --- Bottom Section  --- */}
+      <div
+        className="mt-auto px-6 py-4 border-t border-gray-100"
+        ref={menuRef}
+      >
         {/* More Button */}
         <button
           onClick={() => setOpen(!open)}

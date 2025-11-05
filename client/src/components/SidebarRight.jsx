@@ -1,7 +1,14 @@
 import React from "react";
-import { Users, TrendingUp, Info } from "lucide-react";
+import { Users, TrendingUp, Info, User } from "lucide-react";
 
 const SidebarRight = () => {
+  // Simulated logged-in user (replace later with real auth data)
+  const currentUser = {
+    name: "Anand Kumar",
+    username: "anand_k",
+    profilePic: "https://i.pravatar.cc/150?img=12", // Sample profile image
+  };
+
   const suggested = [
     { name: "captures_by_am", role: "Photographer" },
     { name: "rupsa_", role: "Content Creator" },
@@ -20,9 +27,28 @@ const SidebarRight = () => {
       className="fixed top-0 right-0 w-[18rem] h-screen bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white 
       border-l border-gray-200 shadow-sm flex flex-col justify-between p-6 transition-all duration-300 z-40"
     >
-      {/* Top Section */}
       <div>
-        {/* Suggested Section */}
+        {/* 🧑 Your Account Section */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <img
+              src={currentUser.profilePic}
+              alt={currentUser.name}
+              className="w-10 h-10 rounded-full object-cover border border-gray-200"
+            />
+            <div>
+              <h4 className="text-[14px] font-semibold text-slate-800">
+                {currentUser.name}
+              </h4>
+              <p className="text-[12px] text-gray-500">@{currentUser.username}</p>
+            </div>
+          </div>
+          <button className="text-[12px] text-blue-600 font-medium hover:underline">
+            Switch
+          </button>
+        </div>
+
+        {/* 👥 Suggested Section */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Users className="text-blue-600" size={18} />
@@ -39,7 +65,7 @@ const SidebarRight = () => {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src="/profile.jpg"
+                    src={`https://i.pravatar.cc/150?img=${i + 20}`}
                     alt={user.name}
                     className="w-8 h-8 rounded-full object-cover border border-gray-200"
                   />
@@ -63,7 +89,7 @@ const SidebarRight = () => {
         {/* Divider */}
         <hr className="my-6 border-gray-200" />
 
-        {/* Trending Topics */}
+        {/* 🔥 Trending Topics */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="text-blue-600" size={18} />
@@ -88,7 +114,7 @@ const SidebarRight = () => {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* ℹ️ Footer */}
       <div className="border-t border-gray-100 pt-4">
         <div className="flex items-center gap-2 text-gray-500 text-[12.5px] hover:text-blue-600 cursor-pointer transition">
           <Info size={14} />
