@@ -25,3 +25,13 @@ dist-ssr
 .env
 ML_Models/manahsphere/
 ML_Models\DeBERTa_v3_best_model
+ML_Models\DeBERTa_v3_best_model\added_tokens.json
+ML_Models\DeBERTa_v3_best_model\config.json
+ML_Models\DeBERTa_v3_best_model\label_encoder.pkl
+ML_Models\DeBERTa_v3_best_model\model.safetensors
+ML_Models\DeBERTa_v3_best_model\special_tokens_map.json
+ML_Models\DeBERTa_v3_best_model\spm.model
+ML_Models\DeBERTa_v3_best_model\tokenizer_config.json
+ML_Models\DeBERTa_v3_best_model\training_log.csv
+ML_Models\DeBERTa_v3_best_model\true_label_mapping.json
+DeBERTa_v3_best_model/
