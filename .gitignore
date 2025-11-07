@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 .env
 ML_Models/manahsphere/
+ML_Models\DeBERTa_v3_best_model
