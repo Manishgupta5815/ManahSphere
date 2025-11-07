@@ -1,127 +1,230 @@
-import React, { useEffect, useState } from "react";
-import {
-  MoreHorizontal,
-  ThumbsUp,
-  MessageCircle,
-  Repeat2,
-  Send,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useMemo, useState } from "react";
+import { MoreHorizontal, ThumbsUp, MessageCircle, Repeat2, Send, Share2, Copy } from "lucide-react";
 
-const PostCard = ({ post }) => {
-  const [analyzed, setAnalyzed] = useState(false);
+// Helpers
+const pretty = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+const fmtConfidence = (c) =>
+  typeof c === "number" && !isNaN(c) ? `${c.toFixed(1)}%` : null;
 
-  useEffect(() => {
-    const timer = setTimeout(() => setAnalyzed(true), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+// Small badge: emoji + label + confidence; uses backend emotion color if present
+const EmotionBadge = ({ emoji, label, color, confidence }) => {
+  const labelPretty = pretty(label || "neutral");
+  const value = fmtConfidence(confidence);
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 25 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white border border-gray-200 rounded-xl shadow-sm 
-      w-full mx-auto max-w-2xl mb-6 transition-all duration-300 hover:shadow-[0_4px_14px_rgba(59,130,246,0.1)]"
+    <div
+      className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[13px] font-medium"
+      style={{
+        borderColor: color || "var(--border, #CBD5E1)",
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.9) 100%)",
+      }}
+      aria-label={`Detected emotion ${labelPretty}${value ? ` at ${value}` : ""}`}
+    >
+      <span className="text-[16px] leading-none">{emoji || "😐"}</span>
+      <span
+        className="bg-clip-text text-transparent"
+        style={{
+          backgroundImage: `linear-gradient(90deg, ${color || "#64748B"}, #6366F1)`,
+        }}
+      >
+        {labelPretty}
+        {value && <span className="ml-1 text-muted-foreground">({value})</span>}
+      </span>
+    </div>
+  );
+};
+
+const PostCard = ({ post }) => {
+  // Safe defaults
+  const {
+    id,
+    user = "Anonymous User",
+    username = "user",
+    avatar = "https://api.dicebear.com/7.x/avataaars/svg?seed=manish",
+    text = "",
+    emotion = {},
+    time = "Just now",
+    image,
+    likes = 0,
+    comments = 0,
+  } = post || {};
+
+  const [analyzed, setAnalyzed] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes);
+  const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setAnalyzed(true), 800);
+    return () => clearTimeout(t);
+  }, []);
+
+  const accent = useMemo(() => emotion?.color || "var(--border, #E5E7EB)", [emotion?.color]);
+
+  const handleLike = () => {
+    setLiked((v) => !v);
+    setLikeCount((c) => (liked ? Math.max(0, c - 1) : c + 1));
+  };
+
+  // Long text expander
+  const MAX_CHARS = 320;
+  const isLong = (text || "").length > MAX_CHARS;
+  const visibleText = isLong && !expanded ? `${text.slice(0, MAX_CHARS)}…` : text;
+
+  // Share / copy helpers
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(text || "");
+    } catch {}
+  };
+
+  const shareNative = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Post", text: text || "" });
+      } else {
+        await copyToClipboard();
+      }
+    } catch {}
+  };
+
+  return (
+    <div
+      className="bg-card border border-border rounded-xl shadow-soft hover-lift animate-fade-in"
+      aria-live="polite"
     >
       {/* Header */}
       <div className="flex items-start justify-between px-5 pt-5 pb-3">
         <div className="flex items-start gap-3">
-          <img
-            src="/profile.jpg"
-            alt="User"
-            className="w-10 h-10 rounded-full object-cover border border-gray-300"
-          />
+          <span className="relative inline-flex">
+            <img
+              src={avatar}
+              alt={`${user} avatar`}
+              className="w-10 h-10 rounded-full border-2 border-border object-cover"
+              loading="lazy"
+            />
+            {/* Accent ring from emotion color */}
+            <span
+              className="absolute inset-0 rounded-full pointer-events-none"
+              style={{ boxShadow: `0 0 0 2px ${accent} inset` }}
+              aria-hidden="true"
+            />
+          </span>
           <div>
-            <h3 className="text-[15px] font-semibold text-slate-800">
-              {post.user || "Anonymous User"}
-            </h3>
-            <p className="text-[13px] text-gray-500 leading-tight">
-              Software Engineer · {post.time || "Recently"}
+            <h3 className="text-sm font-semibold text-foreground">{user}</h3>
+            <p className="text-xs text-muted-foreground">
+              @{username} · {time}
             </p>
           </div>
         </div>
-        <MoreHorizontal
-          size={18}
-          className="text-gray-500 hover:text-blue-600 cursor-pointer transition"
-        />
+        <button
+          className="p-1.5 rounded-md hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"
+          aria-label="More options"
+          type="button"
+        >
+          <MoreHorizontal size={18} />
+        </button>
       </div>
 
-      {/* Post Content */}
-      <div className="px-5 pb-3 text-[15px] leading-relaxed text-slate-800 whitespace-pre-line">
-        {post.text}
+      {/* Content */}
+      <div className="px-5 pb-3 text-sm leading-relaxed text-foreground whitespace-pre-line">
+        {visibleText}
+        {isLong && (
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="ml-2 text-xs font-medium text-primary hover:underline"
+            type="button"
+          >
+            {expanded ? "See less" : "See more"}
+          </button>
+        )}
       </div>
 
       {/* Optional Image */}
-      {post.image && (
+      {image && (
         <div className="px-5 pb-3">
           <img
-            src={post.image}
+            src={image}
             alt="Post content"
-            className="w-full rounded-lg border border-gray-200 object-cover"
+            className="w-full rounded-xl border border-border object-cover"
+            loading="lazy"
           />
         </div>
       )}
 
-      {/* Emotion / AI Result */}
-      {/* Emotion / AI Result */}
+      {/* Emotion */}
       <div className="min-h-[28px] px-5 pb-3">
-        <AnimatePresence mode="wait">
-          {!analyzed ? (
-            <motion.p
-              key="analyzing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="text-gray-500 italic text-[13px]"
-            >
-              Analyzing sentiment...
-            </motion.p>
-          ) : (
-            post.emotion && (
-              <motion.div
-                key="emotion"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="flex items-center gap-2 text-[14px] font-medium"
-              >
-                {/* Emoji — keep its natural color */}
-                <span className="text-[17px]">{post.emotion.emoji}</span>
-
-                {/* Label — gradient applied only to this */}
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  {post.emotion.label}
-                </span>
-              </motion.div>
-            )
-          )}
-        </AnimatePresence>
+        {!analyzed ? (
+          <div className="h-6 w-52 rounded-full bg-muted animate-pulse" aria-label="Analyzing…" />
+        ) : emotion?.label || emotion?.emoji ? (
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <EmotionBadge
+              emoji={emotion?.emoji}
+              label={emotion?.label}
+              color={emotion?.color}
+              confidence={post?.confidence}
+            />
+          </div>
+        ) : (
+          <p className="text-muted-foreground italic text-xs">No sentiment detected.</p>
+        )}
       </div>
 
-      <hr className="border-gray-200" />
+      {/* Accent divider */}
+      <div
+        className="h-px w-full"
+        style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
+        aria-hidden="true"
+      />
 
-      {/* Action Buttons */}
-      <div className="flex justify-around items-center text-gray-600 text-[13.5px] px-5 py-2.5 select-none">
-        {[
-          { icon: <ThumbsUp size={16} strokeWidth={1.7} />, label: "Like" },
-          { icon: <MessageCircle size={16} strokeWidth={1.7} />, label: "Comment" },
-          { icon: <Repeat2 size={16} strokeWidth={1.7} />, label: "Repost" },
-          { icon: <Send size={16} strokeWidth={1.7} />, label: "Send" },
-        ].map(({ icon, label }, i) => (
+      {/* Actions */}
+      <div className="flex justify-around items-center text-muted-foreground text-sm px-5 py-3">
+        <button
+          onClick={handleLike}
+          className={`flex items-center gap-2 hover:text-primary transition-colors ${
+            liked ? "text-primary" : ""
+          }`}
+          type="button"
+          aria-pressed={liked}
+          aria-label="Like"
+        >
+          <ThumbsUp size={16} className={liked ? "fill-current" : ""} />
+          <span>{likeCount > 0 ? likeCount : "Like"}</span>
+        </button>
+
+        <button className="flex items-center gap-2 hover:text-primary transition-colors" type="button">
+          <MessageCircle size={16} />
+          <span>{comments > 0 ? comments : "Comment"}</span>
+        </button>
+
+        <button className="flex items-center gap-2 hover:text-accent transition-colors" type="button">
+          <Repeat2 size={16} />
+          <span>Repost</span>
+        </button>
+
+        <div className="flex items-center gap-2">
           <button
-            key={i}
-            className="flex items-center gap-1.5 hover:text-blue-600 transition-all duration-200 hover:scale-[1.03]"
+            onClick={shareNative}
+            className="flex items-center gap-2 hover:text-primary transition-colors"
+            type="button"
+            aria-label="Share"
           >
-            {icon} {label}
+            <Share2 size={16} />
+            <span>Share</span>
           </button>
-        ))}
+          <button
+            onClick={copyToClipboard}
+            className="flex items-center gap-2 hover:text-primary transition-colors"
+            type="button"
+            aria-label="Copy post text"
+          >
+            <Copy size={16} />
+            <span>Copy</span>
+          </button>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

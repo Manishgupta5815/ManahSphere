@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
-import Journal from "./pages/Journal";
+import EditProfile from "./pages/EditProfile";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -13,6 +13,8 @@ import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import SidebarLeft from "./components/SidebarLeft"; 
+import CheckupResults from "./pages/CheckupResults";
+import MentalCheckup from "./pages/MentalCheckup";
 
 // ✅ Layout now includes Navbar logic
 const Layout = ({ children }) => {
@@ -71,13 +73,15 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/feed" element={<FeedPage />} />
-          <Route path="/journal" element={<Journal />} />
+          <Route path= "/edit-profile"element= {<EditProfile/>}/>,
           <Route path="/profile" element={<Profile />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/mental-checkup" element={<MentalCheckup />} />
+          <Route path="/checkup-results" element={<CheckupResults />} />
         </Routes>
       </Layout>
     </Router>

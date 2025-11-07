@@ -1,13 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
+/* ---------- THEME TOKENS (Sidebar + Global UI) ---------- */
+:root {
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 220 15% 20%;
+  --sidebar-primary: 220 90% 56%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 100% 96%;
+  --sidebar-accent-foreground: 220 80% 30%;
+  --sidebar-border: 220 14% 90%;
+  --sidebar-ring: 220 90% 60%;
+}
+
+/* 🌙 Dark Mode */
+.dark {
+  --sidebar-background: 220 15% 10%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 220 90% 65%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 25% 20%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 220 10% 25%;
+  --sidebar-ring: 220 90% 65%;
+}
+
+/* ------------------------------------------------------- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Global styles */
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f9fafb;
 }
+
+/* Floating animation */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -16,6 +44,8 @@ body {
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+/* Gradient glow animation */
 .glow {
   background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
   background-size: 400% 400%;

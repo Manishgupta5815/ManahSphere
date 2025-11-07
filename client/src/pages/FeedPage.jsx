@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import SidebarLeft from "../components/SidebarLeft";
-import SidebarRight from "../components/SidebarRight";
+import { Search } from "lucide-react";
+import SidebarLeftUpdated from "../components/SidebarLeft";
+import SidebarRightUpdated from "../components/SidebarRight";
 import PostInput from "../components/PostInput";
 import PostCard from "../components/PostCard";
 
@@ -10,110 +10,65 @@ const FeedPage = () => {
   const [query, setQuery] = useState("");
 
   const handleNewPost = (newPost) => {
-    setPosts([newPost, ...posts]);
+    setPosts((prev) => [newPost, ...prev]);
   };
 
   const filteredPosts = useMemo(() => {
     if (!query.trim()) return posts;
     const q = query.toLowerCase();
     return posts.filter((p) => {
-      const text = `${p.text ?? ""} ${p.author ?? ""} ${p.title ?? ""}`.toLowerCase();
+      const text = `${p.text ?? ""} ${p.user ?? ""} ${p.username ?? ""}`.toLowerCase();
       return text.includes(q);
     });
   }, [posts, query]);
 
   return (
-    <div
-      className="min-h-screen font-['Inter'] text-gray-800 overflow-x-hidden transition-colors duration-500 
-      bg-gradient-to-b from-[#fdfdff] via-[#f9fbff] to-white"
-    >
-      {/* Fixed Sidebars */}
-      <SidebarLeft />
-      <SidebarRight />
+    <div className="min-h-screen bg-[#f8f9fc] text-gray-800 transition-colors duration-300">
+      {/* Sidebars */}
+      <SidebarLeftUpdated />
+      <SidebarRightUpdated />
 
       {/* Main Feed Area */}
-      <main
-        className="flex flex-col items-center pt-14 px-4 sm:px-6" // reduced top padding for balanced height
-        style={{
-          marginLeft: "18rem",
-          marginRight: "18rem",
-        }}
-      >
-        {/* Search + Post Input Container */}
-        <div className="w-full max-w-2xl relative flex flex-col items-center">
-          {/* Search Bar (slightly lifted to appear in middle visually) */}
-          <motion.div
-            className="w-full absolute -top-10" // Moves the search bar up visually
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-          >
-            <div className="flex items-center w-full bg-white border border-gray-200 rounded-lg px-3 py-2 shadow-sm">
+      <main className="ml-72 mr-80 min-h-screen">
+        <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+          {/* Search Bar */}
+          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+            <div className="relative">
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                size={18}
+              />
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search posts, authors or topics..."
-                className="w-full bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
-                aria-label="Search posts"
+                className="w-full bg-[#fafbff] border border-gray-200 rounded-lg pl-10 pr-4 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400"
               />
-              {query && (
-                <button
-                  onClick={() => setQuery("")}
-                  className="text-sm text-gray-500 hover:text-gray-700 ml-2"
-                  aria-label="Clear search"
-                >
-                  Clear
-                </button>
-              )}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Post Input Section */}
-          <motion.div
-            className="w-full flex justify-center mt-10" // keeps perfect spacing below lifted search bar
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
+          {/* Post Input Box */}
+          <div className="bg-white  ">
             <PostInput onPost={handleNewPost} />
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Feed Posts */}
-        <div className="w-full max-w-2xl mt-8 space-y-6">
-          <AnimatePresence>
+          {/* Feed Posts */}
+          <div className="space-y-5">
             {filteredPosts.length === 0 ? (
-              <motion.div
-                key="no-posts"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-center text-gray-500 mt-10 text-[15px]"
-              >
+              <div className="text-center text-gray-500 bg-white border border-gray-200 rounded-xl shadow-sm py-10">
                 {posts.length === 0
                   ? "No posts yet. Be the first to share something insightful 💭"
                   : "No posts matched your search."}
-              </motion.div>
+              </div>
             ) : (
-              filteredPosts.map((post, idx) => (
-                <motion.div
-                  key={post.id ?? idx}
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: idx * 0.05,
-                    ease: "easeOut",
-                  }}
-                >
+              filteredPosts.map((post, index) => (
+                <div key={post.id || index} className="bg-white border border-gray-200 rounded-xl shadow-sm">
                   <PostCard post={post} />
-                </motion.div>
+                </div>
               ))
             )}
-          </AnimatePresence>
+          </div>
         </div>
       </main>
     </div>

@@ -118,10 +118,10 @@ const SidebarRight = () => {
       <div className="border-t border-gray-100 pt-4">
         <div className="flex items-center gap-2 text-gray-500 text-[12.5px] hover:text-blue-600 cursor-pointer transition">
           <Info size={14} />
-          <span>About MindScape</span>
+          <span>About मनःSphere</span>
         </div>
         <p className="text-gray-400 text-[11.5px] mt-2">
-          © 2025 MindScape Inc. · Empowered by AI
+          © 2025 मनःSphere Inc. · Empowered by AI
         </p>
       </div>
     </div>

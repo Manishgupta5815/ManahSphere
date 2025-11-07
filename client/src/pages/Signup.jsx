@@ -95,7 +95,7 @@ const Signup = () => {
         {/* Header */}
         <div className="text-center mb-5">
           <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-            MindScape
+            मनःSphere
           </h1>
           <p className="text-gray-500 mt-1 text-[13px]">
             Your AI-powered journey to mindfulness

@@ -54,7 +54,7 @@ const Home = () => {
               <br /> AI-Powered Clarity
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed mb-8">
-              MindScape helps you understand your emotions, track your mood, and feel
+              मनःSphere helps you understand your emotions, track your mood, and feel
               supported — combining empathy with AI to make mental wellness simple,
               private, and empowering.
             </p>
@@ -62,7 +62,7 @@ const Home = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/journal"
+                to="/signup"
                 className="px-8 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-2xl transition-transform hover:scale-105"
               >
                 Start Your Journey
@@ -82,7 +82,7 @@ const Home = () => {
           <div className="flex-1 flex justify-center md:justify-end">
             <img
               src={heroImg}
-              alt="MindScape AI Illustration"
+              alt="मनःSphere AI Illustration"
               className="w-[420px] md:w-[480px] drop-shadow-2xl"
             />
           </div>
@@ -95,7 +95,7 @@ const Home = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Why{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              MindScape?
+              मनःSphere?
             </span>
           </h2>
         </ScrollFadeIn>
@@ -110,7 +110,7 @@ const Home = () => {
             {
               icon: <Lock className="w-12 h-12 text-purple-600 mx-auto mb-4" />,
               title: "Private & Secure",
-              desc: "Your thoughts stay yours — fully encrypted and protected within MindScape.",
+              desc: "Your thoughts stay yours — fully encrypted and protected within मनःSphere.",
             },
             {
               icon: <MessageSquareHeart className="w-12 h-12 text-pink-600 mx-auto mb-4" />,
@@ -200,7 +200,7 @@ const Home = () => {
           {[
             {
               name: "Riya Sharma",
-              text: "MindScape helped me identify stress patterns and take control of my emotions. It's like having a therapist in my pocket.",
+              text: "मनःSphere helped me identify stress patterns and take control of my emotions. It's like having a therapist in my pocket.",
               stars: 5,
             },
             {
@@ -245,7 +245,7 @@ const Home = () => {
         <ScrollFadeIn>
           <div className="max-w-2xl mx-auto px-6">
             <h2 className="text-4xl font-bold mb-6">
-              Start Your MindScape Journey Today
+              Start Your मनःSphere Journey Today
             </h2>
             <p className="text-lg mb-8 text-blue-100">
               Take the first step towards emotional clarity and balanced living.
@@ -267,10 +267,10 @@ const Home = () => {
         className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-10 text-center"
       >
         <h4 className="font-semibold text-lg mb-2">
-          MindScape — Where Tech Meets Empathy 💙
+          मनःSphere — Where Tech Meets Empathy 💙
         </h4>
         <p className="text-sm opacity-90 mb-1">
-          ⚠ MindScape provides emotional insights, not medical diagnosis.
+          ⚠ मनःSphere provides emotional insights, not medical diagnosis.
         </p>
         <p className="text-sm opacity-90">
           In distress? Contact AASRA Helpline (India): 91-9820466726 | Global:
