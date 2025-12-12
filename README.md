@@ -291,8 +291,8 @@ Ankit Shaw
 
 Anand Kumar
 
-**Guided by**
-
-Prof. Dr. Sudipta Basu Pal
-
-University of Engineering & Management, Kolkata
+---
+### 🎓 **Project Supervisor**
+**Prof. Dr. Sudipta Basu Pal**  
+UEM Kolkata  
+Providing continuous guidance, domain expertise, and research support.
