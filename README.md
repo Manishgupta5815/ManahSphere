@@ -7,7 +7,20 @@ It combines **empathy with artificial intelligence** to make mental wellness *si
 This project includes a complete social ecosystem — AI-analyzed posts, activity discovery, messaging, notifications, profile system, mental check-ups, and more — all powered by a state-of-the-art **DeBERTa-v3 emotion classification model**.
 
 ---
+# 📑 Table of Contents
 
+- [✨ Features](#-features)
+- [🤖 AI Models Used](#-ai-models-used)
+- [📊 Full Model Comparison Table](#-full-model-comparison-table)
+- [🏆 Best Model](#-best-model-deberta-v3-weighted-focal-model-d2)
+- [🧱 System Architecture](#-system-architecture)
+- [📚 Dataset](#-dataset)
+- [🛠 Tech Stack](#-tech-stack)
+- [🚀 Installation & Setup](#-installation--setup)
+- [🔮 Future Enhancements](#-future-enhancements)
+- [👥 Authors](#-authors)
+
+---
 ## ✨ Features
 
 ### 🏠 Modern Landing Page  
