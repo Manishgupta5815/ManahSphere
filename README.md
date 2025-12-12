@@ -227,6 +227,57 @@ Based on your dataset description:
 # 🚀 Installation & Setup
 
 ### 1️⃣ Clone Repository
-```bash
+```
 git clone https://github.com/yourusername/manahSphere.git
 cd manahSphere
+```
+###2️⃣ Install Client
+```
+cd client
+npm install
+npm start
+```
+###3️⃣ Install Backend
+```
+cd server
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+###4️⃣ Add Environment Variables
+```
+Create a .env:
+
+MONGO_URI=your_mongo_url
+JWT_SECRET=your_secret
+MODEL_PATH=./models/deberta-v3
+🚀 Running the AI Model Server
+python model_server.py
+```
+---
+#🔮 Future Enhancements
+
+AI Emotional Chatbot
+
+Multi-language support (Hindi, Bengali, etc.)
+
+Multimodal analysis (text + voice + facial emotions)
+
+Cloud deployment (AWS/GCP/Azure)
+
+Better personalization algorithms
+---
+#👥 Authors
+
+Manish Kumar Gupta
+
+Sneha Kumari
+
+Aastha Jaiswal
+
+Ankit Shaw
+
+Anand Kumar
+
+Guided by
+Prof. Dr. Sudipta Basu Pal
+University of Engineering & Management, Kolkata
