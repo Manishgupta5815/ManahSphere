@@ -1,4 +1,4 @@
-# 🌿 मनःSphere — AI-Powered Mental Wellness Platform  
+# 🌐 मनःSphere — AI-Powered Mental Wellness Platform  
 *A Social Platform + AI Emotion Engine for Mindful Living*
 
 मनःSphere is an advanced AI-powered mental wellness platform designed to help users understand their emotions, track their mood, discover wellness activities, and connect with a supportive community.  
