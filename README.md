@@ -291,6 +291,8 @@ Ankit Shaw
 
 Anand Kumar
 
-Guided by
+**Guided by**
+
 Prof. Dr. Sudipta Basu Pal
+
 University of Engineering & Management, Kolkata
